@@ -30,7 +30,7 @@
         {
             this.response = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.publish = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.response)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,15 +54,15 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // publish
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(116, 226);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Нийтлэх";
-            this.button2.UseVisualStyleBackColor = true;
+            this.publish.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.publish.Location = new System.Drawing.Point(116, 226);
+            this.publish.Name = "publish";
+            this.publish.Size = new System.Drawing.Size(75, 23);
+            this.publish.TabIndex = 2;
+            this.publish.UseVisualStyleBackColor = true;
+            this.publish.Click += new System.EventHandler(this.button2_Click);
             // 
             // View
             // 
@@ -70,7 +70,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.publish);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.response);
             this.Name = "View";
@@ -86,6 +86,6 @@
 
         private System.Windows.Forms.DataGridView response;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button publish;
     }
 }

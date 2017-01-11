@@ -8,11 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace SE_4_11
 {
     public partial class View : Form
     {
+        MySqlConnection connection;
         MySqlCommand command;
         MySqlDataReader reader;
         int y = 1, pixel = 50;
@@ -21,7 +23,7 @@ namespace SE_4_11
         public View(int surveyid, int responseid)
         {
             InitializeComponent();
-            
+
             DataTable questions = new DataTable();
             questions.Columns.Add("id");
             questions.Columns.Add("survey_id");
@@ -43,7 +45,7 @@ namespace SE_4_11
 
             id = surveyid; reid = responseid;
             string connect = "Server = localhost; Database = survey; UserID = root; Password = data;";
-            MySqlConnection connection = new MySqlConnection(connect);
+            connection = new MySqlConnection(connect);
             command = connection.CreateCommand();
             command.CommandText = "SELECT * FROM responses WHERE survey_id = " + id;
             connection.Open();
@@ -57,6 +59,12 @@ namespace SE_4_11
             reader.Read();
             label(reader["title"].ToString());
             label(reader["description"].ToString());
+
+            if (Convert.ToBoolean(reader["publish"]))
+                publish.Text = "Болих";
+            else
+                publish.Text = "Нийтлэх";
+
             reader.Close();
             command.CommandText = "SELECT * FROM questions WHERE survey_id = " + id;
             reader = command.ExecuteReader();
@@ -68,7 +76,21 @@ namespace SE_4_11
                 button1.Hide();
             }
 
-            for(int i = 0; i < questions.Rows.Count; i++)
+            Chart chart = new Chart();
+            var series1 = new Series
+            {
+                Name = "Series1",
+                ChartType = SeriesChartType.Doughnut
+            };
+            chart.Left = 500;
+            chart.Top = 200;
+            chart.Series.Add(series1);
+            series1.Points.AddXY("Hello", 200);
+            series1.Points.AddXY("hi", 2100);
+            series1.Points.AddXY("sain", 500);
+            this.Controls.Add(chart);
+
+            for (int i = 0; i < questions.Rows.Count; i++)
             {
                 command.CommandText = "SELECT * FROM answers WHERE question_id = " + Convert.ToInt32(questions.Rows[i]["id"]);
                 reader = command.ExecuteReader();
@@ -229,6 +251,28 @@ namespace SE_4_11
             
             y++;
             return check;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string query = string.Empty;
+
+            if(publish.Text == "Нийтлэх")
+            {
+                query = "UPDATE surveys SET publish = 1 WHERE id = " + id;
+                publish.Text = "Болих";
+            }else
+            {
+                query = "UPDATE surveys SET publish = 0 WHERE id = " + id;
+                publish.Text = "Нийтлэх";
+            }
+
+            command.CommandText = query;
+            connection.Open();
+            command.ExecuteNonQuery();
+            connection.Close();
+            list l = new SE_4_11.list();
+            l.data();
         }
 
         private void button1_Click(object sender, EventArgs e)
