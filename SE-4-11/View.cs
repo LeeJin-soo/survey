@@ -19,6 +19,7 @@ namespace SE_4_11
         MySqlDataReader reader;
         int y = 1, pixel = 50;
         int id, reid;
+        Control last;
 
         public View(int surveyid, int responseid)
         {
@@ -75,21 +76,9 @@ namespace SE_4_11
                 response.Hide();
                 button1.Hide();
             }
-
-            Chart chart = new Chart();
-            var series1 = new Series
-            {
-                Name = "Series1",
-                ChartType = SeriesChartType.Doughnut
-            };
-            chart.Left = 500;
-            chart.Top = 200;
-            chart.Series.Add(series1);
-            series1.Points.AddXY("Hello", 200);
-            series1.Points.AddXY("hi", 2100);
-            series1.Points.AddXY("sain", 500);
-            this.Controls.Add(chart);
-
+            Chart chart;
+            ChartArea area;
+            Series series1;
             for (int i = 0; i < questions.Rows.Count; i++)
             {
                 command.CommandText = "SELECT * FROM answers WHERE question_id = " + Convert.ToInt32(questions.Rows[i]["id"]);
@@ -107,10 +96,29 @@ namespace SE_4_11
                 switch (Convert.ToInt32(questions.Rows[i]["type_id"]))
                 {
                     case 1:
+                        chart = new Chart();
+                        area = new ChartArea();
+                        chart.ChartAreas.Add(area);
+                        chart.Width = pixel * 3;
+                        chart.Height = pixel * 3;
+
+                        series1 = new Series
+                        {
+                            Name = "Series1",
+                            ChartType = SeriesChartType.Column,
+                        };
+                        chart.Series.Add(series1);
+
                         if (reid == 0)
+                        {
+                            this.Controls.Add(chart);
                             label(questions.Rows[i]["value"].ToString() + " Нийт хариулт: " + responses.Rows.Count);
+                        }
                         else
                             label(questions.Rows[i]["value"].ToString());
+
+                        chart.Top = last.Top;
+                        chart.Left = last.Right + pixel;
 
                         for (int j = 0; j < answers.Rows.Count; j++)
                         {
@@ -126,20 +134,45 @@ namespace SE_4_11
                             }
                             
                             if(reid == 0)
-                                radio(answers.Rows[j]["value"].ToString(), "Тоо: " + count + " Хувь: " + count * 100 / responses.Rows.Count + "%");
+                            {
+                                if (count == 0)
+                                    radio(answers.Rows[j]["value"].ToString(), "Тоо: 0 Хувь: 0%");
+                                else
+                                    radio(answers.Rows[j]["value"].ToString(), "Тоо: " + count + " Хувь: " + count * 100 / responses.Rows.Count + "%");
+                                series1.Points.AddXY(answers.Rows[j]["value"].ToString(), count);
+                            }
 
                             if (reid != 0 && count == 0)
                                 radio(answers.Rows[j]["value"].ToString(), "");
                         }
                         break;
                     case 2:
+                        chart = new Chart();
+                        area = new ChartArea();
+                        area.AxisY.Maximum = 100;
+                        chart.ChartAreas.Add(area);
+                        chart.Width = pixel * 3;
+                        chart.Height = pixel * 3;
+                        series1 = new Series
+                        {
+                            Name = "Series1",
+                            ChartType = SeriesChartType.Column,
+                        };
+                        chart.Series.Add(series1);
+
                         DataView view = new DataView(responses);
                         DataTable table = view.ToTable(true, "response_id");
 
                         if (reid == 0)
+                        {
                             label(questions.Rows[i]["value"].ToString() + " Нийт хариулт: " + table.Rows.Count.ToString());
+                            this.Controls.Add(chart);
+                        }
                         else
                             label(questions.Rows[i]["value"].ToString());
+
+                        chart.Left = last.Right + pixel;
+                        chart.Top = last.Top;
 
                         for (int j = 0; j < answers.Rows.Count; j++)
                         {
@@ -155,7 +188,18 @@ namespace SE_4_11
                             }
 
                             if(reid == 0)
-                                check(answers.Rows[j]["value"].ToString(), "Тоо: " + count + " Хувь: " + count * 100 / table.Rows.Count + "%");
+                            {
+                                if (count == 0)
+                                {
+                                    check(answers.Rows[j]["value"].ToString(), "Тоо: 0 Хувь: 0%");
+                                    series1.Points.AddXY(answers.Rows[j]["value"].ToString(), count);
+                                }
+                                else
+                                {
+                                    check(answers.Rows[j]["value"].ToString(), "Тоо: " + count + " Хувь: " + count * 100 / table.Rows.Count + "%");
+                                    series1.Points.AddXY(answers.Rows[j]["value"].ToString(), count * 100 / table.Rows.Count);
+                                }
+                            }
 
                             if (reid != 0 && count == 0)
                                 check(answers.Rows[j]["value"].ToString(), "");
@@ -168,6 +212,9 @@ namespace SE_4_11
 
                             for (int j = 0; j < responses.Rows.Count; j++)
                                 text(responses.Rows[j]["answer"].ToString());
+
+                            if (responses.Rows.Count == 0)
+                                text("Хариулт байхгүй байна");
                         }
                         else
                         {
@@ -195,6 +242,7 @@ namespace SE_4_11
             label.AutoSize = true;
             this.Controls.Add(label);
             y++;
+            last = label;
         }
 
         private void text(string txt)
@@ -206,6 +254,7 @@ namespace SE_4_11
             text.Left = pixel;
             text.Enabled = false;
             y++;
+            last = text;
         }
 
         private RadioButton radio(string txt, string stats)
@@ -228,6 +277,7 @@ namespace SE_4_11
             }
             
             y++;
+            last = radio;
             return radio;
         }
 
@@ -250,6 +300,7 @@ namespace SE_4_11
             }
             
             y++;
+            last = check;
             return check;
         }
 

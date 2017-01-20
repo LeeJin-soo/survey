@@ -22,6 +22,7 @@ namespace SE_4_11
         DataTable table = new DataTable();
         int count = -1, surveyid;
         MySqlDataReader reader;
+        list form;
         public Form1()
         {
             InitializeComponent();
@@ -32,6 +33,7 @@ namespace SE_4_11
 
         int y = 1;
 
+        // Асуулт button event
         private void create_Click(object sender, EventArgs e)
         {
             count++;
@@ -39,10 +41,12 @@ namespace SE_4_11
             {
                 addtextbox();
                 addradiobutton();
+                addradiobutton();
             }
             if (type.Text == "Олон сонголттой")
             {
                 addtextbox();
+                addcheckbox();
                 addcheckbox();
             }
             if (type.Text == "Бичгэн хариулт")
@@ -137,7 +141,6 @@ namespace SE_4_11
             answer.Add(text);
             answer.Add(drop);
             answers.Add(answer);
-            //
         }
 
         public void lists()
@@ -153,6 +156,7 @@ namespace SE_4_11
             connection.Close();
         }
 
+        // Хариулт button event
         private void add_Click(object sender, EventArgs e)
         {
             if(type.Text == "Нэг сонголттой")
@@ -165,8 +169,9 @@ namespace SE_4_11
         {
             string query;
             connection.Open();
+            form = new list();
 
-            query = "INSERT INTO surveys(title, description) VALUES('"+ title.Text +"', '"+ desc.Text +"')";
+            query = "INSERT INTO surveys(user_id, title, description) VALUES('"+ form.cpu() +"', '"+ title.Text +"', '"+ desc.Text +"')";
             command.CommandText = query;
             command.ExecuteNonQuery();
 
@@ -221,7 +226,7 @@ namespace SE_4_11
 
             if (DialogResult.OK == MessageBox.Show("Санал асуулгыг хадгаллаа.", ""))
             {
-                list form = new SE_4_11.list();
+                form = new list();
                 form.data();
                 this.Close();
             }

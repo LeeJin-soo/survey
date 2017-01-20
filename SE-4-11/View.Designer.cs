@@ -36,10 +36,13 @@
             // 
             // response
             // 
+            this.response.AllowUserToAddRows = false;
+            this.response.AllowUserToDeleteRows = false;
             this.response.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.response.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.response.Location = new System.Drawing.Point(21, 12);
             this.response.Name = "response";
+            this.response.ReadOnly = true;
             this.response.Size = new System.Drawing.Size(240, 150);
             this.response.TabIndex = 0;
             // 
