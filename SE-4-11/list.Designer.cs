@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             this.surveys = new System.Windows.Forms.DataGridView();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.user_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.publish = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.title = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.user_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.publish = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.title = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.surveys)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,50 +63,6 @@
             this.surveys.ReadOnly = true;
             this.surveys.Size = new System.Drawing.Size(402, 179);
             this.surveys.TabIndex = 1;
-            // 
-            // id
-            // 
-            this.id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.id.DataPropertyName = "id";
-            this.id.FillWeight = 38.07107F;
-            this.id.HeaderText = "Id";
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.Width = 25;
-            // 
-            // user_id
-            // 
-            this.user_id.DataPropertyName = "user_id";
-            this.user_id.FillWeight = 115.4822F;
-            this.user_id.HeaderText = "Хэнээс";
-            this.user_id.Name = "user_id";
-            this.user_id.ReadOnly = true;
-            // 
-            // publish
-            // 
-            this.publish.DataPropertyName = "publish";
-            this.publish.FillWeight = 115.4822F;
-            this.publish.HeaderText = "Нийтэлсэн";
-            this.publish.Name = "publish";
-            this.publish.ReadOnly = true;
-            this.publish.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.publish.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // title
-            // 
-            this.title.DataPropertyName = "title";
-            this.title.FillWeight = 115.4822F;
-            this.title.HeaderText = "Сэдэв";
-            this.title.Name = "title";
-            this.title.ReadOnly = true;
-            // 
-            // description
-            // 
-            this.description.DataPropertyName = "description";
-            this.description.FillWeight = 115.4822F;
-            this.description.HeaderText = "Тайлбар";
-            this.description.Name = "description";
-            this.description.ReadOnly = true;
             // 
             // button1
             // 
@@ -174,6 +130,54 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
+            // id
+            // 
+            this.id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.id.DataPropertyName = "id";
+            this.id.FillWeight = 38.07107F;
+            this.id.HeaderText = "Дугаар";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Width = 69;
+            // 
+            // user_id
+            // 
+            this.user_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.user_id.DataPropertyName = "user_id";
+            this.user_id.FillWeight = 115.4822F;
+            this.user_id.HeaderText = "Хэнээс";
+            this.user_id.Name = "user_id";
+            this.user_id.ReadOnly = true;
+            this.user_id.Width = 69;
+            // 
+            // publish
+            // 
+            this.publish.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.publish.DataPropertyName = "publish";
+            this.publish.FillWeight = 115.4822F;
+            this.publish.HeaderText = "Нийтэлсэн";
+            this.publish.Name = "publish";
+            this.publish.ReadOnly = true;
+            this.publish.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.publish.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.publish.Width = 87;
+            // 
+            // title
+            // 
+            this.title.DataPropertyName = "title";
+            this.title.FillWeight = 115.4822F;
+            this.title.HeaderText = "Сэдэв";
+            this.title.Name = "title";
+            this.title.ReadOnly = true;
+            // 
+            // description
+            // 
+            this.description.DataPropertyName = "description";
+            this.description.FillWeight = 115.4822F;
+            this.description.HeaderText = "Тайлбар";
+            this.description.Name = "description";
+            this.description.ReadOnly = true;
+            // 
             // list
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -187,7 +191,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.surveys);
             this.Name = "list";
-            this.Text = "list";
+            this.Text = "Судалгаанууд";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.surveys)).EndInit();
             this.ResumeLayout(false);
@@ -200,12 +204,12 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn user_id;
         private System.Windows.Forms.DataGridViewCheckBoxColumn publish;
         private System.Windows.Forms.DataGridViewTextBoxColumn title;
         private System.Windows.Forms.DataGridViewTextBoxColumn description;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
     }
 }

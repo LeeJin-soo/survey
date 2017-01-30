@@ -79,31 +79,36 @@ namespace SE_4_11
         {
             if(surveys.CurrentRow.Cells["user_id"].Value == "Надаас")
             {
-                int id = Convert.ToInt32(surveys.CurrentRow.Cells["id"].Value);
-                command.CommandText = "SELECT id FROM questions WHERE survey_id = " + id;
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                MySqlConnection con = new MySqlConnection(database);
-                MySqlCommand cmd = con.CreateCommand();
+                DialogResult result = MessageBox.Show("Энэ судалгааг устгах уу?", "Зөвшөөрөх", MessageBoxButtons.YesNo);
 
-                while(reader.Read())
+                if(result == DialogResult.Yes)
                 {
-                    con.Open();
-                    cmd.CommandText = "DELETE FROM answers WHERE question_id = " + reader["id"];
-                    cmd.ExecuteNonQuery();
-                    cmd.CommandText = "DELETE FROM question_response WHERE question_id = " + reader["id"];
-                    cmd.ExecuteNonQuery();
-                    cmd.CommandText = "DELETE FROM questions WHERE id = " + reader["id"];
-                    cmd.ExecuteNonQuery();
-                    con.Close();
-                }
+                    int id = Convert.ToInt32(surveys.CurrentRow.Cells["id"].Value);
+                    command.CommandText = "SELECT id FROM questions WHERE survey_id = " + id;
+                    connection.Open();
+                    MySqlDataReader reader = command.ExecuteReader();
+                    MySqlConnection con = new MySqlConnection(database);
+                    MySqlCommand cmd = con.CreateCommand();
 
-                reader.Close();
-                command.CommandText = "DELETE FROM surveys WHERE id = " + id;
-                command.ExecuteNonQuery();
-                connection.Close();
-                MessageBox.Show("Амжилттай устгалаа.");
-                data();
+                    while (reader.Read())
+                    {
+                        con.Open();
+                        cmd.CommandText = "DELETE FROM answers WHERE question_id = " + reader["id"];
+                        cmd.ExecuteNonQuery();
+                        cmd.CommandText = "DELETE FROM question_response WHERE question_id = " + reader["id"];
+                        cmd.ExecuteNonQuery();
+                        cmd.CommandText = "DELETE FROM questions WHERE id = " + reader["id"];
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+
+                    reader.Close();
+                    command.CommandText = "DELETE FROM surveys WHERE id = " + id;
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                    MessageBox.Show("Амжилттай устгалаа.");
+                    data();
+                }
             }else
             {
                 MessageBox.Show("Уучлаарай, устгаж болохгүй.");
@@ -126,9 +131,15 @@ namespace SE_4_11
         // button for edit
         private void button5_Click(object sender, EventArgs e)
         {
-            int surveyId = Convert.ToInt32(surveys.CurrentRow.Cells["id"].Value);
-            Edit editForm = new Edit(surveyId);
-            editForm.Show();
+            if(surveys.CurrentRow.Cells["user_id"].Value == "Надаас")
+            {
+                int surveyId = Convert.ToInt32(surveys.CurrentRow.Cells["id"].Value);
+                Edit editForm = new Edit(surveyId);
+                editForm.Show();
+            }else
+            {
+                MessageBox.Show("Уучлаарай, засаж болохгүй.");
+            }
         }
 
         // button for update

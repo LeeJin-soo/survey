@@ -50,7 +50,7 @@
             this.ClientSize = new System.Drawing.Size(490, 446);
             this.Controls.Add(this.button1);
             this.Name = "fill";
-            this.Text = "fill";
+            this.Text = "Судалгаа бөглөх";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
 

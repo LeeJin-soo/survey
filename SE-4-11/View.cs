@@ -26,23 +26,9 @@ namespace SE_4_11
             InitializeComponent();
 
             DataTable questions = new DataTable();
-            questions.Columns.Add("id");
-            questions.Columns.Add("survey_id");
-            questions.Columns.Add("type_id");
-            questions.Columns.Add("value");
             DataTable answers = new DataTable();
-            answers.Columns.Add("id");
-            answers.Columns.Add("value");
-            answers.Columns.Add("logic_id");
-            answers.Columns.Add("question_id");
             DataTable responses = new DataTable();
-            responses.Columns.Add("id");
-            responses.Columns.Add("response_id");
-            responses.Columns.Add("question_id");
-            responses.Columns.Add("answer");
             DataTable re = new DataTable();
-            re.Columns.Add("id");
-            re.Columns.Add("survey_id");
 
             id = surveyid; reid = responseid;
             string connect = "Server = localhost; Database = survey; UserID = root; Password = data;";
@@ -52,6 +38,7 @@ namespace SE_4_11
             connection.Open();
             reader = command.ExecuteReader();
             re.Load(reader);
+            re.Columns.Remove("survey_id");
             response.DataSource = re;
             connection.Close();
             command.CommandText = "SELECT * FROM surveys WHERE id = " + id;
@@ -328,7 +315,7 @@ namespace SE_4_11
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int go = Convert.ToInt32(response.CurrentRow.Cells["id"].Value);
+            int go = Convert.ToInt32(response.CurrentRow.Cells["Column1"].Value);
             View form = new View(id, go);
             form.Show();
 

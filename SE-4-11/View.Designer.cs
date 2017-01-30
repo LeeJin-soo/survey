@@ -31,6 +31,7 @@
             this.response = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.publish = new System.Windows.Forms.Button();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.response)).BeginInit();
             this.SuspendLayout();
             // 
@@ -39,7 +40,10 @@
             this.response.AllowUserToAddRows = false;
             this.response.AllowUserToDeleteRows = false;
             this.response.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.response.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.response.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.response.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1});
             this.response.Location = new System.Drawing.Point(21, 12);
             this.response.Name = "response";
             this.response.ReadOnly = true;
@@ -67,6 +71,13 @@
             this.publish.UseVisualStyleBackColor = true;
             this.publish.Click += new System.EventHandler(this.button2_Click);
             // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "id";
+            this.Column1.HeaderText = "Хэрэглэгч";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
             // View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -77,7 +88,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.response);
             this.Name = "View";
-            this.Text = "View";
+            this.Text = "Статистик";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.View_Load);
             ((System.ComponentModel.ISupportInitialize)(this.response)).EndInit();
@@ -90,5 +101,6 @@
         private System.Windows.Forms.DataGridView response;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button publish;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
     }
 }

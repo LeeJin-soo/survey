@@ -39,7 +39,7 @@ namespace SE_4_11
             connection.Close();
             connection.Open();
 
-            command.CommandText = "SELECT * FROM questions WHERE survey_id =" + id;
+            command.CommandText = "SELECT * FROM questions WHERE survey_id =" + id + " ORDER BY sort ASC";
             reader = command.ExecuteReader();
             questions.Columns.Add("id");
             questions.Columns.Add("survey_id");

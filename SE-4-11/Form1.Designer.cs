@@ -136,7 +136,7 @@
             this.Controls.Add(this.type);
             this.Controls.Add(this.create);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Шинэ судалгаа";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
             this.PerformLayout();
