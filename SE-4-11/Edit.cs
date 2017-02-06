@@ -19,6 +19,7 @@ namespace SE_4_11
         DataTable dataTable;
         int y = 1, pixel = 50;
         int surveyId;
+        int questionId;
 
         public Edit(int surveyId)
         {
@@ -72,7 +73,6 @@ namespace SE_4_11
             {
                 MessageBox.Show("Илүү асуулт алга.");
             }
-            answerData();
         }
 
         public void data(int surveyId)
@@ -89,6 +89,115 @@ namespace SE_4_11
             connection.Close();
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            questionText.Text = questionsView.CurrentRow.Cells["value"].Value.ToString();
+            questionId = (int) questionsView.CurrentRow.Cells["id"].Value;
+
+            switch(Convert.ToInt32(questionsView.CurrentRow.Cells["type_id"].Value))
+            {
+                case 1:
+                    typeBox.SelectedIndex = 0;
+                    break;
+                case 2:
+                    typeBox.SelectedIndex = 1;
+                    break;
+                case 3:
+                    typeBox.SelectedIndex = 2;
+                    break;
+            }
+            answerData();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string query = "UPDATE questions SET value = '"+ questionText.Text +"',";
+            connection.Open();
+
+            switch (typeBox.Text)
+            {
+                case "Нэг сонголттой":
+                    query += "type_id = 1 ";
+                    break;
+                case "Олон сонголттой":
+                    query += "type_id = 2 ";
+                    break;
+                case "Бичгэн хариулт":
+                    query += "type_id = 3 ";
+                    command.CommandText = "SELECT type_id FROM questions WHERE id = "+ questionId;
+                    reader = command.ExecuteReader();
+                    reader.Read();
+
+                    if(Convert.ToInt32(reader[0]) != 3)
+                    {
+                        reader.Close();
+                        command.CommandText = "DELETE FROM question_response WHERE question_id = " + questionId;
+                        command.ExecuteNonQuery();
+                        command.CommandText = "DELETE FROM answers WHERE question_id = "+ questionId;
+                        command.ExecuteNonQuery();
+                    }
+
+                    break;
+            }
+
+            query += "WHERE id = "+ questionId;
+            command.CommandText = query;
+            command.ExecuteNonQuery();
+            connection.Close();
+            data(surveyId);
+            answerData();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Энэ асуултыг устгах уу?", "Устгах", MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                string query = "DELETE FROM question_response WHERE question_id = "+ questionsView.CurrentRow.Cells["id"].Value;
+                command.CommandText = query;
+                connection.Open();
+                command.ExecuteNonQuery();
+                query = "DELETE FROM questions WHERE id = " + questionsView.CurrentRow.Cells["id"].Value;
+                command.CommandText = query;
+                command.ExecuteNonQuery();
+                connection.Close();
+                data(surveyId);
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            string value = questionText.Text;
+            string query = "SELECT MAX(sort) FROM questions WHERE survey_id = "+ surveyId;
+            connection.Open();
+            command.CommandText = query;
+            reader = command.ExecuteReader();
+            reader.Read();
+            int sort = Convert.ToInt32(reader[0]) + 1;
+            reader.Close();
+            query = "INSERT INTO questions(survey_id, type_id, value, sort) VALUES(" + surveyId + ",";
+            
+            switch(typeBox.Text)
+            {
+                case "Нэг сонголттой":
+                    query += "1,";
+                    break;
+                case "Олон сонголттой":
+                    query += "2,";
+                    break;
+                case "Бичгэн хариулт":
+                    query += "3,";
+                    break;
+            }
+
+            query += "'"+ value +"', "+ sort +")";
+            command.CommandText = query;
+            command.ExecuteNonQuery();
+            connection.Close();
+            data(surveyId);
+        }
+
         public void answerData()
         {
             int questionId = Convert.ToInt32(questionsView.CurrentRow.Cells["id"].Value);
@@ -98,7 +207,8 @@ namespace SE_4_11
             reader = command.ExecuteReader();
             dataTable = new DataTable();
             dataTable.Load(reader);
-            dataGridView1.DataSource = dataTable;
+            dataTable.Columns.Remove("question_id");
+            answerView.DataSource = dataTable;
             connection.Close();
         }
     }

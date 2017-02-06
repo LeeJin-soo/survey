@@ -176,6 +176,7 @@ namespace SE_4_11
                 }
             }
             connection.Close();
+
             if (DialogResult.OK == MessageBox.Show("Амжилттай бөглөлөө."))
                 this.Close();
         }
