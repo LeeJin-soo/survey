@@ -47,6 +47,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.answerText = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.answerView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.questionsView)).BeginInit();
             this.SuspendLayout();
@@ -75,6 +77,7 @@
             // 
             // answerView
             // 
+            this.answerView.AllowUserToAddRows = false;
             this.answerView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.answerView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.answerView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -91,6 +94,7 @@
             this.answerId.DataPropertyName = "id";
             this.answerId.HeaderText = "Дугаар";
             this.answerId.Name = "answerId";
+            this.answerId.ReadOnly = true;
             this.answerId.Width = 69;
             // 
             // answerValue
@@ -238,11 +242,29 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
+            // answerText
+            // 
+            this.answerText.Location = new System.Drawing.Point(315, 309);
+            this.answerText.Name = "answerText";
+            this.answerText.Size = new System.Drawing.Size(100, 20);
+            this.answerText.TabIndex = 15;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(261, 312);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(48, 13);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "Хариулт";
+            // 
             // Edit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(666, 581);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.answerText);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.label3);
@@ -283,8 +305,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.DataGridViewTextBoxColumn answerId;
         private System.Windows.Forms.DataGridViewTextBoxColumn answerValue;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.TextBox answerText;
+        private System.Windows.Forms.Label label4;
     }
 }

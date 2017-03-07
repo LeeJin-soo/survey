@@ -106,7 +106,18 @@ namespace SE_4_11
                     typeBox.SelectedIndex = 2;
                     break;
             }
-            answerData();
+
+            if (Convert.ToInt32(questionsView.CurrentRow.Cells["type_id"].Value) != 3)
+            {
+                answerView.Enabled = true;
+                answerData();
+            }
+            else
+            {
+                answerView.Enabled = false;
+                dataTable = new DataTable();
+                answerView.DataSource = dataTable;
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -143,9 +154,44 @@ namespace SE_4_11
             query += "WHERE id = "+ questionId;
             command.CommandText = query;
             command.ExecuteNonQuery();
+            query = "SELECT * FROM answers WHERE question_id = " + questionId;
+            command.CommandText = query;
+            reader = command.ExecuteReader();
+            dataTable.Load(reader);
+            //dataTable.Columns.Remove("question_id");
+            //dataTable.PrimaryKey = new DataColumn[]{ dataTable.Columns["id"]};
+
+            foreach (DataGridViewRow row in answerView.Rows)
+            {
+                query = "UPDATE answers SET value = '"+ row.Cells["answerValue"].Value +"' WHERE id = "+ row.Cells["answerId"].Value;
+                command.CommandText = query;
+                command.ExecuteNonQuery();
+                
+                foreach(DataRow data in dataTable.Rows)
+                {
+                    if (row.Cells["answerId"].Value == data["id"])
+                    {
+                        dataTable.Rows.Remove(data);
+                        break;
+                    }
+                }
+            }
+            
+            /*foreach (DataRow row in dataTable.Rows)
+            {
+                MessageBox.Show(row["id"].ToString());
+            }*/
+
+            if(answerText.Text != "")
+            {
+                query = "INSERT INTO answers(value, question_id) VALUES('" + answerText.Text + "'," + questionId + ")";
+                command.CommandText = query;
+                command.ExecuteNonQuery();
+            }
+
             connection.Close();
+            //answerData();
             data(surveyId);
-            answerData();
         }
 
         private void button5_Click(object sender, EventArgs e)
