@@ -94,7 +94,8 @@ namespace SE_4_11
             connection.Close();
         }
 
-        static MySqlConnection connection = new MySqlConnection("Server = localhost; Database = survey; Uid = root; Password = data;");
+        static Connection constr = new Connection();
+        static MySqlConnection connection = new MySqlConnection(constr.database);
         MySqlCommand command = connection.CreateCommand();
         int y = 1;
 

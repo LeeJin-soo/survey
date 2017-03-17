@@ -20,6 +20,7 @@ namespace SE_4_11
         int y = 1, pixel = 50;
         int id, reid;
         Control last;
+        static Connection constr = new Connection();
 
         public View(int surveyid, int responseid)
         {
@@ -31,8 +32,7 @@ namespace SE_4_11
             DataTable re = new DataTable();
 
             id = surveyid; reid = responseid;
-            string connect = "Server = localhost; Database = survey; UserID = root; Password = data;";
-            connection = new MySqlConnection(connect);
+            connection = new MySqlConnection(constr.database);
             command = connection.CreateCommand();
             command.CommandText = "SELECT * FROM responses WHERE survey_id = " + id;
             connection.Open();

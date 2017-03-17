@@ -20,14 +20,14 @@ namespace SE_4_11
         int y = 1, pixel = 50;
         int surveyId;
         int questionId;
+        static Connection constr = new Connection();
 
         public Edit(int surveyId)
         {
             InitializeComponent();
 
             this.surveyId = surveyId;
-            string connect = "Server = localhost; Database = survey; UserID = root; Password = data;";
-            connection = new MySqlConnection(connect);
+            connection = new MySqlConnection(constr.database);
             command = connection.CreateCommand();
             data(surveyId);
         }

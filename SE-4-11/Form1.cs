@@ -13,7 +13,8 @@ namespace SE_4_11
 {
     public partial class Form1 : Form
     {
-        static MySqlConnection connection = new MySqlConnection("Server=localhost;Database=survey;Uid=root;password='data';");
+        static Connection constr = new Connection();
+        static MySqlConnection connection = new MySqlConnection(constr.database);
         MySqlCommand command = connection.CreateCommand();
         List<string> list = new List<string>();
         List<TextBox> questions = new List<TextBox>();

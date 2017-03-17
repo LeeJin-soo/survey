@@ -14,8 +14,8 @@ namespace SE_4_11
 {
     public partial class list : Form
     {
-        static string database = "Server = localhost; Database = survey; Uid = root; Password = data;";
-        static MySqlConnection connection = new MySqlConnection(database);
+        static Connection conn = new Connection();
+        static MySqlConnection connection = new MySqlConnection(conn.database);
         MySqlCommand command = connection.CreateCommand();
 
         public list()
@@ -87,7 +87,7 @@ namespace SE_4_11
                     command.CommandText = "SELECT id FROM questions WHERE survey_id = " + id;
                     connection.Open();
                     MySqlDataReader reader = command.ExecuteReader();
-                    MySqlConnection con = new MySqlConnection(database);
+                    MySqlConnection con = new MySqlConnection(conn.database);
                     MySqlCommand cmd = con.CreateCommand();
 
                     while (reader.Read())
